@@ -5,6 +5,15 @@ import { useState } from 'react';
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [holidays, setHolidays] = useState('');
+  const [userInput, setUserInput] = useState('');
+  const [filterHolidays, setFilterHolidays] = useState('');
+
+  const handleSearch = () => {
+    let filter = holidays.filter((holiday) =>
+      holiday.name.toLowerCase().includes(userInput.toLowerCase())
+    );
+    setFilterHolidays(filter);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,13 +33,29 @@ export default function App() {
   return (
     <>
       <div>
-        {holidays.map((holiday) => (
-          <div key={holiday.id}>
-            <h1>{holiday.name}</h1>
-            <h2>{holiday.date}</h2>
-            <h3>{holiday.countryCode}</h3>
-          </div>
-        ))}
+        <input
+          value={userInput}
+          type="text"
+          placeholder="new year's day"
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+        <button onClick={handleSearch}>search</button>
+
+        {filterHolidays.length === 0
+          ? holidays.map((holiday) => (
+              <div key={holiday.id}>
+                <h1>{holiday.name}</h1>
+                <h2>{holiday.date}</h2>
+                <h3>{holiday.countryCode}</h3>
+              </div>
+            ))
+          : filterHolidays.map((holiday) => (
+              <div key={holiday.id}>
+                <h1>{holiday.name}</h1>
+                <h2>{holiday.date}</h2>
+                <h3>{holiday.countryCode}</h3>
+              </div>
+            ))}
       </div>
     </>
   );
