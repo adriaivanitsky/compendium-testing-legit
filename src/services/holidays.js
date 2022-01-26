@@ -1,6 +1,6 @@
 export async function fetchHolidays() {
   const resp = await fetch(
-    'https://date.nager.at/api/v3/NextPublicHolidaysWorldwide'
+    'https://date.nager.at/api/v3/PublicHolidays/2022/US'
   );
   const data = await resp.json();
   return data;
