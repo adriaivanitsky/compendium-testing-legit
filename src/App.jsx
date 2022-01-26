@@ -4,12 +4,17 @@ import { useState } from 'react';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [holiday, setHoliday] = useState('');
+  const [holidays, setHolidays] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchHolidays();
-      setHoliday(data);
+      let addId = 0;
+      data.forEach((item) => {
+        item.id = addId;
+        addId++;
+      });
+      setHolidays(data);
       setLoading(false);
       console.log(data);
     };
@@ -18,14 +23,15 @@ export default function App() {
   if (loading) return <h1>loading...</h1>;
   return (
     <>
-      <h1>{holiday[0].name}</h1>
-      <h2>{holiday[0].date}</h2>
-      <h3>{holiday[0].countryCode}</h3>
-      {holiday[0].global ? (
-        <p>This is a global holiday!</p>
-      ) : (
-        <p>This is a local holiday</p>
-      )}
+      <div>
+        {holidays.map((holiday) => (
+          <div key={holiday.id}>
+            <h1>{holiday.name}</h1>
+            <h2>{holiday.date}</h2>
+            <h3>{holiday.countryCode}</h3>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
