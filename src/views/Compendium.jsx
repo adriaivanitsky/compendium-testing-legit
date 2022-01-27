@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Controls from '../components/Controls';
-import { fetchHolidays } from './services/holidays';
+import { fetchHolidays } from '../services/holidays';
 
 export default function Compendium() {
   const [loading, setLoading] = useState(true);
