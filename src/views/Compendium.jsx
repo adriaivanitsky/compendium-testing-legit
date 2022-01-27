@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Controls from '../components/Controls';
+import HolidayList from '../components/HolidayList';
 import { fetchHolidays } from '../services/holidays';
 
 export default function Compendium() {
@@ -34,22 +35,7 @@ export default function Compendium() {
     <>
       <div>
         <Controls {...{ userInput, setUserInput, handleSearch }} />
-
-        {filterHolidays.length === 0
-          ? holidays.map((holiday) => (
-              <div key={holiday.id}>
-                <h1>{holiday.name}</h1>
-                <h2>{holiday.date}</h2>
-                <h3>{holiday.countryCode}</h3>
-              </div>
-            ))
-          : filterHolidays.map((holiday) => (
-              <div key={holiday.id}>
-                <h1>{holiday.name}</h1>
-                <h2>{holiday.date}</h2>
-                <h3>{holiday.countryCode}</h3>
-              </div>
-            ))}
+        <HolidayList {...{ holidays, filterHolidays }} />
       </div>
     </>
   );
