@@ -26,7 +26,6 @@ export default function Compendium() {
       });
       setHolidays(data);
       setLoading(false);
-      console.log(data);
     };
     fetchData();
   }, []);
