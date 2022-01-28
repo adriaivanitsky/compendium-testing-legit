@@ -5,9 +5,9 @@ import { fetchHolidays } from '../services/holidays';
 
 export default function Compendium() {
   const [loading, setLoading] = useState(true);
-  const [holidays, setHolidays] = useState('');
+  const [holidays, setHolidays] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const [filterHolidays, setFilterHolidays] = useState('');
+  const [filterHolidays, setFilterHolidays] = useState([]);
 
   const handleSearch = () => {
     let filter = holidays.filter((holiday) =>
