@@ -5,9 +5,9 @@ import { fetchHolidays } from '../services/holidays';
 
 export default function Compendium() {
   const [loading, setLoading] = useState(true);
-  const [holidays, setHolidays] = useState('');
+  const [holidays, setHolidays] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const [filterHolidays, setFilterHolidays] = useState('');
+  const [filterHolidays, setFilterHolidays] = useState([]);
 
   const handleSearch = () => {
     let filter = holidays.filter((holiday) =>
@@ -19,11 +19,7 @@ export default function Compendium() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchHolidays();
-      let addId = 0;
-      data.forEach((item) => {
-        item.id = addId;
-        addId++;
-      });
+      data.map((item, index) => (item.id = `${item.name}-${index}`));
       setHolidays(data);
       setLoading(false);
     };
