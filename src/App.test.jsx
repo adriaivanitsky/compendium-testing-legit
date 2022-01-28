@@ -37,3 +37,10 @@ test('should display all holidays when button is clicked with no user input', as
   userEvent.click(button);
   await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(40));
 });
+
+test('should display nothing when user input doesnt match any data', async () => {
+  render(<App />);
+  const button = await screen.findByRole('button');
+  userEvent.click(button);
+  await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(0));
+});
