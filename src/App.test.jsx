@@ -219,13 +219,24 @@ beforeAll(() => server.listen());
 afterAll(() => server.close());
 
 jest.setTimeout(7000);
-test('should display user search correctly', async () => {
+test('should display user search returning one matching item correctly', async () => {
   render(<App />);
   const search = await screen.findByRole('textbox');
   const button = await screen.findByRole('button');
   userEvent.type(search, `New Year's Day`);
   userEvent.click(button);
   await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(4), {
+    timeout: 5000,
+  });
+});
+
+test('should display multiples if matches user search', async () => {
+  render(<App />);
+  const search = await screen.findByRole('textbox');
+  const button = await screen.findByRole('button');
+  userEvent.type(search, `in`);
+  userEvent.click(button);
+  await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(13), {
     timeout: 5000,
   });
 });
