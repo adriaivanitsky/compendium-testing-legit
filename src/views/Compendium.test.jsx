@@ -14,6 +14,12 @@ test('should render a loading state', async () => {
   await waitForElementToBeRemoved(loading);
 });
 
+test('should render a search bar', async () => {
+  render(<Compendium />);
+  const searchBar = await screen.findByRole('textbox');
+  expect(searchBar).toBeInTheDocument();
+});
+
 const mockResponse = [
   {
     date: '2021-12-31',
@@ -193,17 +199,17 @@ const mockResponse = [
     launchYear: 1863,
     types: ['Public'],
   },
-  {
-    date: '2022-12-26',
-    localName: 'Christmas Day',
-    name: 'Christmas Day',
-    countryCode: 'US',
-    fixed: false,
-    global: true,
-    counties: null,
-    launchYear: null,
-    types: ['Public'],
-  },
+  //   {
+  //     date: '2022-12-26',
+  //     localName: 'Christmas Day',
+  //     name: 'Christmas Day',
+  //     countryCode: 'US',
+  //     fixed: false,
+  //     global: true,
+  //     counties: null,
+  //     launchYear: null,
+  //     types: ['Public'],
+  //   },
 ];
 
 const server = setupServer(
@@ -216,3 +222,11 @@ const server = setupServer(
 );
 
 beforeAll(() => server.listen());
+
+afterAll(() => server.close());
+
+test('h1 h2 and h3 render inside all divs', async () => {
+  render(<Compendium />);
+  const headings = await screen.findAllByRole('heading');
+  expect(headings).toHaveLength(36);
+});
