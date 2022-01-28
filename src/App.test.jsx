@@ -30,3 +30,10 @@ test('should display multiples if matches user search', async () => {
     timeout: 5000,
   });
 });
+
+test('should display all holidays when button is clicked with no user input', async () => {
+  render(<App />);
+  const button = await screen.findByRole('button');
+  userEvent.click(button);
+  await waitFor(() => expect(screen.getAllByRole('heading')).toHaveLength(40));
+});
