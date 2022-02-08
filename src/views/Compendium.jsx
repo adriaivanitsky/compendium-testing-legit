@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
 import Controls from '../components/Controls';
 import HolidayList from '../components/HolidayList';
-import { fetchHolidays } from '../services/holidays';
-
+import useHolidays from '../context/HolidayContext';
 export default function Compendium() {
-  const [loading, setLoading] = useState(true);
-  const [holidays, setHolidays] = useState([]);
-  const [userInput, setUserInput] = useState('');
-  const [filterHolidays, setFilterHolidays] = useState([]);
-
+  const {
+    loading,
+    holidays,
+    userInput,
+    setUserInput,
+    filterHolidays,
+    setFilterHolidays,
+  } = useHolidays();
   const handleSearch = () => {
     let filter = holidays.filter((holiday) =>
       holiday.name.toLowerCase().includes(userInput.toLowerCase())
@@ -16,15 +17,6 @@ export default function Compendium() {
     setFilterHolidays(filter);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchHolidays();
-      data.map((item, index) => (item.id = `${item.name}-${index}`));
-      setHolidays(data);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
   if (loading) return <p>loading...</p>;
   return (
     <>
